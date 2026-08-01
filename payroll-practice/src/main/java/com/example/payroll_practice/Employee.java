@@ -11,25 +11,47 @@ public class Employee {
     @Id
     @GeneratedValue
     private Long id;
-    private String name;
+
+    private String firstName;
+    private String lastName;
     private String role;
 
     Employee(){
 
     }
 
-    Employee(String name, String role){
-        this.name=name;
+    Employee(String firstName,String lastName, String role){
+        this.firstName=firstName;
+        this.lastName=lastName;
         this.role=role;
 
     }
 
-    public String getName() {
-        return this.name;
+    public String getName(){
+        return this.firstName+" "+this.lastName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String name){
+        String[] parts=name.split(" ");
+
+        this.firstName=parts[0];
+        this.lastName=parts[1];
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public Long getId() {
