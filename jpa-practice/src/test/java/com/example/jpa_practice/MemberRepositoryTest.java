@@ -1,5 +1,7 @@
 package com.example.jpa_practice;
 
+import com.example.jpa_practice.member.Member;
+import com.example.jpa_practice.member.MemberRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.Test;

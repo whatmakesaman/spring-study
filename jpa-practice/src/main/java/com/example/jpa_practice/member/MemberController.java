@@ -1,4 +1,4 @@
-package com.example.jpa_practice;
+package com.example.jpa_practice.member;
 
 
 import jakarta.validation.Valid;
@@ -18,7 +18,7 @@ public class MemberController{
     }
 
     @PostMapping
-    public ResponseEntity<Void> register(@Valid @RequestBody MemberCreateRequest memberCreateRequest)
+    public ResponseEntity<Void> register(@Valid @RequestBody MemberCreateRequestDTO memberCreateRequest)
     {
         Long memberId= memberService.register(
                 memberCreateRequest.name(),
@@ -33,11 +33,11 @@ public class MemberController{
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MemberResponse> findMember(@PathVariable Long id)
+    public ResponseEntity<MemberResponseDTO> findMember(@PathVariable Long id)
     {
         Member member=memberService.findMember(id);
 
-        MemberResponse memberResponse=new MemberResponse(
+        MemberResponseDTO memberResponse=new MemberResponseDTO(
                 member.getId(),
                 member.getName(),
                 member.getEmail()
@@ -48,7 +48,7 @@ public class MemberController{
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateMember(
             @PathVariable Long id,
-            @Valid @RequestBody MemberUpdateRequest request
+            @Valid @RequestBody MemberUpdateRequestDTO request
     )
     {
         memberService.updateMember(id, request.name(), request.email());

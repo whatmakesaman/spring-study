@@ -1,9 +1,9 @@
-package com.example.jpa_practice;
+package com.example.jpa_practice.member;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-public record MemberUpdateRequest (
+public record MemberUpdateRequestDTO(
 
     @NotBlank
     String name,

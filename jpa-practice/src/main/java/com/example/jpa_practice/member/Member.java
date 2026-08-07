@@ -1,8 +1,7 @@
-package com.example.jpa_practice;
+package com.example.jpa_practice.member;
 
 
 import jakarta.persistence.*;
-import org.springframework.transaction.annotation.Transactional;
 
 @Entity
 @Table(name="members")
