@@ -49,9 +49,17 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PostResponseDTO>> findAllPost(){
+    public ResponseEntity<List<PostResponseDTO>> findAllPosts(
+            @RequestParam(required = false) Long memberId
+    ){
+        List<PostResponseDTO> responses;
 
-        List<PostResponseDTO> responses=postService.findAllPosts();
+        if(memberId==null){
+            responses=postService.findAllPosts();
+        }
+        else{
+            responses=postService.findPostsByMemberId(memberId);
+        }
 
         return ResponseEntity.ok(responses);
     }
@@ -66,4 +74,14 @@ public class PostController {
                 .noContent()
                 .build();
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePost(@PathVariable Long id)
+    {
+        postService.deletePost(id);
+
+        return ResponseEntity
+                .noContent()
+                .build();
+    }
+
 }

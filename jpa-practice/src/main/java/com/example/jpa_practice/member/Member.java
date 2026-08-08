@@ -1,7 +1,11 @@
 package com.example.jpa_practice.member;
 
 
+import com.example.jpa_practice.post.Post;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="members")
@@ -13,6 +17,9 @@ public class Member {
 
     private String name;
     private String email;
+
+    @OneToMany(mappedBy = "member",cascade = CascadeType.REMOVE)
+    private List<Post> posts=new ArrayList<>();
 
     public Member(){}
 

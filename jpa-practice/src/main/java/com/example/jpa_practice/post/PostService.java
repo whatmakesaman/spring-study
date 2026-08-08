@@ -86,4 +86,33 @@ public class PostService {
                 );
         post.changeContent(title,content);
     }
+
+    @Transactional
+    public void deletePost(Long id)
+    {
+        Post post=postRepository.findById(id)
+                .orElseThrow(
+                        ()->new IllegalArgumentException("게시글 찾을 수 없습니다 id="+id)
+                );
+        postRepository.delete(post);
+    }
+
+    public List<PostResponseDTO> findPostsByMemberId(Long memberId)
+    {
+        return postRepository
+                .findAllByMemberId(memberId)
+                .stream()
+                .map(post->{
+                    Member member=post.getMember();
+
+                    return new PostResponseDTO(
+                            post.getId(),
+                            post.getTitle(),
+                            post.getContent(),
+                            member.getId(),
+                            member.getName()
+                    );
+                })
+                .toList();
+    }
 }
