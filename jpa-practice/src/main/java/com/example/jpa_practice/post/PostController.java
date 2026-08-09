@@ -3,10 +3,13 @@ package com.example.jpa_practice.post;
 import com.example.jpa_practice.member.MemberRepository;
 import jakarta.persistence.GeneratedValue;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.RequestParam;
 import java.net.URI;
 import java.util.List;
 
@@ -49,17 +52,13 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PostResponseDTO>> findAllPosts(
-            @RequestParam(required = false) Long memberId
+    public ResponseEntity<Page<PostResponseDTO>> findAllPosts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
     ){
-        List<PostResponseDTO> responses;
+        Pageable pageable= PageRequest.of(page,size);
 
-        if(memberId==null){
-            responses=postService.findAllPosts();
-        }
-        else{
-            responses=postService.findPostsByMemberId(memberId);
-        }
+        Page<PostResponseDTO> responses=postService.findAllPosts(pageable);
 
         return ResponseEntity.ok(responses);
     }

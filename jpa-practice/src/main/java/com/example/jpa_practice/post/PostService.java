@@ -2,9 +2,10 @@ package com.example.jpa_practice.post;
 
 import com.example.jpa_practice.member.Member;
 import com.example.jpa_practice.member.MemberRepository;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 @Service
@@ -56,10 +57,11 @@ public class PostService {
         );
     }
 
-    public List<PostResponseDTO> findAllPosts()
+    @Transactional(readOnly = true)
+    public Page<PostResponseDTO> findAllPosts(Pageable pageable)
     {
-        return postRepository.findAll()
-                .stream()
+
+        return postRepository.findAllWithMember(pageable)
                 .map(post -> {
                     Member member=post.getMember();
 
@@ -70,8 +72,8 @@ public class PostService {
                             member.getId(),
                             member.getName()
                     );
-                })
-                .toList();
+                });
+
     }
     @Transactional
     public void updatePost(
