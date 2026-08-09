@@ -53,13 +53,21 @@ public class PostController {
 
     @GetMapping
     public ResponseEntity<Page<PostResponseDTO>> findAllPosts(
+            @RequestParam(required = false) Long memberId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ){
         Pageable pageable= PageRequest.of(page,size);
 
-        Page<PostResponseDTO> responses=postService.findAllPosts(pageable);
+        Page<PostResponseDTO> responses;
 
+        if(memberId==null) {
+                responses=postService.findAllPosts(pageable);
+        }
+        else {
+            responses=postService.findPostsByMemberId(memberId,pageable);
+
+        }
         return ResponseEntity.ok(responses);
     }
 

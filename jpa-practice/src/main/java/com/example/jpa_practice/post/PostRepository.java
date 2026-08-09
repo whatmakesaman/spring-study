@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 public interface PostRepository extends JpaRepository<Post,Long> {
 
@@ -14,5 +15,20 @@ public interface PostRepository extends JpaRepository<Post,Long> {
     countQuery = "select count(post) from Post post")
     Page<Post> findAllWithMember(Pageable pageable);
 
-    List<Post> findAllByMemberId(Long memberId);
+
+    @Query(
+            value="""
+                    select post from Post post join fetch post.member 
+                    where post.member.id=:memberId
+                    order by post.id desc
+                  """,
+                countQuery = """
+                        select count(post)
+                        from Post post
+                        where post.member.id=:memberId
+                        """
+    )
+    Page<Post> findAllByMemberId(
+            @Param("memberId") Long memberId,
+            Pageable pageable);
 }

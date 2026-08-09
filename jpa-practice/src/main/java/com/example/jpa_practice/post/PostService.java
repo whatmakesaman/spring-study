@@ -99,11 +99,10 @@ public class PostService {
         postRepository.delete(post);
     }
 
-    public List<PostResponseDTO> findPostsByMemberId(Long memberId)
+    public Page<PostResponseDTO> findPostsByMemberId(Long memberId,Pageable pageable)
     {
         return postRepository
-                .findAllByMemberId(memberId)
-                .stream()
+                .findAllByMemberId(memberId,pageable)
                 .map(post->{
                     Member member=post.getMember();
 
@@ -114,7 +113,7 @@ public class PostService {
                             member.getId(),
                             member.getName()
                     );
-                })
-                .toList();
+                });
+
     }
 }
