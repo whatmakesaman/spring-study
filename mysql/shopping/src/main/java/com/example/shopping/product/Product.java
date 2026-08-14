@@ -65,4 +65,9 @@ public class Product {
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
+
+    public void changeStatus(ProductStatus status)
+    {
+        this.productstatus=status;
+    }
 }

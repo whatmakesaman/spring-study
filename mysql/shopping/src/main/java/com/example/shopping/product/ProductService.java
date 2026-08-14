@@ -20,15 +20,14 @@ public class ProductService {
     public Product create(
             String name,
             int price,
-            int stockQuantity,
-            ProductStatus status
+            int stockQuantity
     )
     {
         Product product=new Product(
                 name,
                 price,
                 stockQuantity,
-                status
+                ProductStatus.DRAFT
         );
         return productRepository.save(product);
     }
@@ -41,5 +40,14 @@ public class ProductService {
 
     public List<Product> findAll(){
         return productRepository.findAll();
+    }
+
+    @Transactional
+    public void statusUpdate(Long productId, ProductStatus status)
+    {
+        Product product=findById(productId);
+        product.changeStatus(status);
+
+
     }
 }
