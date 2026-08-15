@@ -13,9 +13,13 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+    private final ProductRepository productRepository;
 
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService,
+                             ProductRepository productRepository)
+    {
         this.productService = productService;
+        this.productRepository=productRepository;
     }
 
     @GetMapping
@@ -54,6 +58,13 @@ public class ProductController {
     )
     {
         productService.statusUpdate(id,requestDto.getStatus());
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id)
+    {
+        productService.delete(id);
     }
 
 }
