@@ -16,4 +16,8 @@ public class CustomerResponseDto {
         this.email= customer.getEmail();
         this.createdAt=customer.getCreatedAt();
     }
+    public Long getId() { return id; }
+    public String getName() { return name; }
+    public String getEmail() { return email; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
 }

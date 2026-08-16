@@ -3,7 +3,6 @@ package com.example.shopping.customer;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 @Transactional(readOnly = true)
@@ -15,7 +14,7 @@ public class CustomerService {
         this.customerRepository = customerRepository;
     }
 
-    public Customer findById(@PathVariable Long id)
+    public Customer findById( Long id)
     {
         return customerRepository.findById(id)
                 .orElseThrow(

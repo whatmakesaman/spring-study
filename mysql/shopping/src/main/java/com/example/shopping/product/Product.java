@@ -1,6 +1,7 @@
 package com.example.shopping.product;
 
 
+
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -69,5 +70,14 @@ public class Product {
     public void changeStatus(ProductStatus status)
     {
         this.productstatus=status;
+    }
+
+    public void decreaseStock(int quantity)
+    {
+      if(this.stockQuantity<quantity)
+      {
+          throw new IllegalArgumentException("재고가 부족합니다");
+      }
+      this.stockQuantity-=quantity;
     }
 }
