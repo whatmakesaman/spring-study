@@ -52,4 +52,9 @@ public class Order {
     public Customer getCustomer() {
         return customer;
     }
+
+    public void cancel()
+    {
+        this.status=OrderStatus.CANCELLED;
+    }
 }

@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
 @Transactional(readOnly = true)
@@ -68,6 +67,27 @@ public class OrderService {
                 .orElseThrow(()->new IllegalArgumentException("없음"));
     }
 
+    public List<OrderItem> findOrderItems(Long orderId)
+    {
+        return orderItemRepository.findByOrderId(orderId);
+
+    }
+
+    @Transactional
+    public void cancelOrder(Long orderId)
+    {
+        Order order=orderRepository.findById(orderId)
+                .orElseThrow(()->new IllegalArgumentException("없음"));
+
+        order.cancel();
+
+        List<OrderItem> orderItems=findOrderItems(orderId);
+
+        for(OrderItem orderItem:orderItems)
+        {
+            orderItem.getProduct().increaseStock(orderItem.getQuantity());
+        }
+    }
 
 
 }
