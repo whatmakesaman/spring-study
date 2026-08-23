@@ -1,11 +1,10 @@
 package com.example.shopping.order;
 
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderResponseDto {
+public class OrderDetailResponseDto {
 
     private Long id;
 
@@ -13,13 +12,20 @@ public class OrderResponseDto {
 
     private LocalDateTime orderedAt;
 
+    private List<OrderItemResponseDto> items;
 
-    public OrderResponseDto(Order order)
+    public OrderDetailResponseDto(Order order, List<OrderItem> orderItems)
     {
         this.id= order.getId();
-        this.status= order.getStatus();
+        this.status=order.getStatus();
         this.orderedAt=order.getOrderedAt();
 
+        List<OrderItemResponseDto> items=new ArrayList<>();
+
+        for (OrderItem orderItem : orderItems) {
+            items.add(new OrderItemResponseDto (orderItem));
+        }
+        this.items=items;
     }
 
     public Long getId() {
@@ -34,4 +40,7 @@ public class OrderResponseDto {
         return orderedAt;
     }
 
+    public List<OrderItemResponseDto> getItems() {
+        return items;
+    }
 }
